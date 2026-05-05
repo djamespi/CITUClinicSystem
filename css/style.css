@@ -1,0 +1,39 @@
+/* css/style.css */
+:root {
+    --dark-blue: #0A192F;
+    --gold: #D4AF37;
+    --white: #FFFFFF;
+    --light-gray: #F3F4F6;
+    --text-dark: #333333;
+    --text-light: #9CA3AF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+body { background-color: var(--light-gray); display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+.auth-container { background-color: var(--white); width: 900px; max-width: 95%; border-radius: 15px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); display: flex; overflow: hidden; min-height: 600px; }
+
+.brand-section { background-color: var(--dark-blue); color: var(--white); width: 45%; padding: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-right: 5px solid var(--gold); }
+.brand-section h1 { font-size: 2.5rem; margin-bottom: 15px; color: var(--gold); }
+.brand-section p { font-size: 1.1rem; line-height: 1.6; color: #D1D5DB; }
+
+.form-section { width: 55%; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+.form-toggle { display: flex; margin-bottom: 30px; border-bottom: 2px solid #E5E7EB; }
+.toggle-btn { background: none; border: none; padding: 10px 20px; font-size: 1.2rem; font-weight: 600; color: var(--text-light); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { color: var(--dark-blue); border-bottom: 3px solid var(--gold); }
+
+.form-wrapper { display: none; animation: fadeIn 0.4s ease-in-out; }
+.form-wrapper.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; margin-bottom: 8px; color: var(--text-dark); font-weight: 600; font-size: 0.9rem; }
+.input-group input, .input-group select { width: 100%; padding: 12px; border: 1px solid #D1D5DB; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; }
+.input-group input:focus, .input-group select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2); }
+
+.submit-btn { width: 100%; padding: 14px; background-color: var(--dark-blue); color: var(--white); border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background-color 0.3s; margin-top: 10px; }
+.submit-btn:hover { background-color: var(--gold); color: var(--dark-blue); }
+
+.role-fields { display: none; background-color: #F8FAFC; padding: 15px; border-radius: 8px; border-left: 4px solid var(--gold); margin-bottom: 20px; }
+.role-fields.active { display: block; }
