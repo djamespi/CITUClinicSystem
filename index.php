@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CIT-U Clinic System | Authentication</title>
     <!-- Import External CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
+    <style>
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+    </style>
 </head>
 <body>
 
@@ -39,12 +49,12 @@
         <!-- REGISTRATION FORM -->
         <form id="registerForm" class="form-wrapper" action="process_register.php" method="POST">
             <!-- NEW: Name and DOB Fields -->
-            <div style="display: flex; gap: 15px;">
-                <div class="input-group" style="flex: 1;">
+            <div class="input-row">
+                <div class="input-group">
                     <label>First Name</label>
                     <input type="text" name="fname" placeholder="Juan" required>
                 </div>
-                <div class="input-group" style="flex: 1;">
+                <div class="input-group">
                     <label>Last Name</label>
                     <input type="text" name="lname" placeholder="Dela Cruz" required>
                 </div>
@@ -54,12 +64,12 @@
                 <label>Date of Birth</label>
                 <input type="date" name="date_of_birth" required>
             </div>
-            <div style="display: flex; gap: 15px;">
-                <div class="input-group" style="flex: 1;">
+            <div class="input-row">
+                <div class="input-group">
                     <label>University ID</label>
                     <input type="text" name="university_id" placeholder="12-3456-78" required>
                 </div>
-                <div class="input-group" style="flex: 1;">
+                <div class="input-group">
                     <label>Email Address</label>
                     <input type="email" name="email" placeholder="name@citu.edu" required>
                 </div>
@@ -113,12 +123,12 @@
                     <label>License Number</label>
                     <input type="text" name="license_no" placeholder="PRC License No.">
                 </div>
-                <div style="display: flex; gap: 15px;">
-                    <div class="input-group" style="flex: 1;">
+                <div class="input-row">
+                    <div class="input-group">
                         <label>Specialization</label>
                         <input type="text" name="specialization" placeholder="e.g., General Medicine">
                     </div>
-                    <div class="input-group" style="flex: 1;">
+                    <div class="input-group">
                         <label>Room Number</label>
                         <input type="text" name="room_number" placeholder="e.g., Rm 102">
                     </div>
