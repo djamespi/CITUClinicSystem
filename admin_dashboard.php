@@ -81,9 +81,11 @@ try {
 <div class="sidebar">
     <h2>CIT-U CLINIC</h2>
     <a href="#" class="active">Dashboard</a>
-    <a href="#">Appointments</a>
-    <a href="#">Patients Directory</a>
-    <a href="#">System Audit Logs</a>
+    <a href="manage_appointments.php">Appointments</a>
+    <a href="manage_users.php">Patients Directory</a>
+    <a href="manage_provider_schedules.php">Provider Overrides</a>
+    <a href="manage_tickets.php">Support Tickets</a>
+    <a href="view_audit_logs.php">System Audit Logs</a>
     <a href="logout.php" class="logout-btn">Log Out</a>
 </div>
 
