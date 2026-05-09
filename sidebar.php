@@ -10,7 +10,13 @@ $admin_display_name = htmlspecialchars($user_info['lname'] . ', ' . $user_info['
 ?>
 
 <div class="top-navbar">
-    <div class="nav-brand">CIT-U CLINIC</div>
+    <div class="nav-brand">
+        <!-- The Logos -->
+        <img src="images/cit-logo.svg" alt="CIT-U Logo" class="nav-logo">
+        <img src="images/clinic-logo.svg" alt="Clinic Logo" class="nav-logo">
+        <!-- The Text -->
+        <span>CIT-U CLINIC</span>
+    </div>
 
     <div class="nav-links">
         <a href="admin_dashboard.php" class="<?php echo ($current_page == 'admin_dashboard.php') ? 'active' : ''; ?>">Dashboard</a>

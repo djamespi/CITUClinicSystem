@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,9 +21,37 @@
 </head>
 <body>
 
+
+<!-- THE POP-UP MESSAGE BOX -->
+<?php if(isset($_SESSION['error']) || isset($_SESSION['success'])): ?>
+    <?php
+    $isError = isset($_SESSION['error']);
+    $message = $isError ? $_SESSION['error'] : $_SESSION['success'];
+    $toastClass = $isError ? 'toast-error' : 'toast-success';
+    // Removed the warning sign for errors, kept the green check for success
+    $icon = $isError ? '' : '✅';
+    ?>
+    <div id="toastBox" class="toast-box <?= $toastClass ?>">
+        <?php if($icon): ?>
+            <div class="toast-icon"><?= $icon ?></div>
+        <?php endif; ?>
+        <div class="toast-message"><?= htmlspecialchars($message) ?></div>
+        <button class="toast-close" onclick="closeToast()">&times;</button>
+    </div>
+    <?php
+    unset($_SESSION['error']);
+    unset($_SESSION['success']);
+    ?>
+<?php endif; ?>
+
 <div class="auth-container">
-    <!-- Branding Section -->
+    <!-- Branding Section (Left Side) -->
     <div class="brand-section">
+        <div class="logo-wrapper">
+            <!-- Assuming clinic-logo is also an SVG. If it's a PNG, just change the extension! -->
+            <img src="images/cit-logo.svg" alt="CIT-U Logo" class="brand-logo">
+            <img src="images/clinic-logo.svg" alt="Clinic Logo" id="clinic-logo" class="brand-logo">
+        </div>
         <h1>CIT-U Clinic</h1>
         <p>Secure Medical Records & Appointment Management System</p>
     </div>
@@ -46,43 +76,16 @@
             <button type="submit" class="submit-btn">Sign In</button>
         </form>
 
-        <!-- REGISTRATION FORM -->
-        <form id="registerForm" class="form-wrapper" action="process_register.php" method="POST">
-            <!-- NEW: Name and DOB Fields -->
-            <div class="input-row">
-                <div class="input-group">
-                    <label>First Name</label>
-                    <input type="text" name="fname" placeholder="Juan" required>
-                </div>
-                <div class="input-group">
-                    <label>Last Name</label>
-                    <input type="text" name="lname" placeholder="Dela Cruz" required>
-                </div>
-            </div>
-
+        <!-- REGISTRATION FORM (STEP 1) -->
+        <form id="registerForm" class="form-wrapper" action="process_step1.php" method="POST">
             <div class="input-group">
-                <label>Date of Birth</label>
-                <input type="date" name="date_of_birth" required>
-            </div>
-            <div class="input-row">
-                <div class="input-group">
-                    <label>University ID</label>
-                    <input type="text" name="university_id" placeholder="12-3456-78" required>
-                </div>
-                <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" name="email" placeholder="name@citu.edu" required>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" name="password" placeholder="Create a strong password" required>
+                <label>University ID</label>
+                <input type="text" name="university_id" placeholder="e.g., 12-3456-78" required>
             </div>
 
             <div class="input-group">
                 <label>Account Type</label>
-                <select name="user_type" id="userTypeSelect" onchange="showRoleFields()" required>
+                <select name="user_type" required>
                     <option value="">-- Select Your Role --</option>
                     <option value="Patient">Student / Patient</option>
                     <option value="Admin">Clinic Administrator</option>
@@ -90,57 +93,23 @@
                 </select>
             </div>
 
-            <!-- Dynamic Patient Fields -->
-            <div id="patientFields" class="role-fields">
+            <div class="input-row">
                 <div class="input-group">
-                    <label>Emergency Contact</label>
-                    <input type="text" name="emergency_contact" placeholder="Name & Phone Number">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Create a password" required>
                 </div>
                 <div class="input-group">
-                    <label>Medical History Summary</label>
-                    <input type="text" name="medical_history" placeholder="Any known allergies or conditions?">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password" placeholder="Repeat password" required>
                 </div>
             </div>
 
-            <!-- Dynamic Admin Fields -->
-            <div id="adminFields" class="role-fields">
-                <div class="input-group">
-                    <label>Department</label>
-                    <input type="text" name="department" placeholder="e.g., IT Support, Records">
-                </div>
-                <div class="input-group">
-                    <label>Access Level</label>
-                    <select name="access_level">
-                        <option value="Standard">Standard</option>
-                        <option value="Superadmin">Superadmin</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Dynamic Provider Fields -->
-            <div id="providerFields" class="role-fields">
-                <div class="input-group">
-                    <label>License Number</label>
-                    <input type="text" name="license_no" placeholder="PRC License No.">
-                </div>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label>Specialization</label>
-                        <input type="text" name="specialization" placeholder="e.g., General Medicine">
-                    </div>
-                    <div class="input-group">
-                        <label>Room Number</label>
-                        <input type="text" name="room_number" placeholder="e.g., Rm 102">
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="submit-btn">Create Account</button>
+            <button type="submit" class="submit-btn">Continue to Profile Setup →</button>
         </form>
     </div>
 </div>
 
 <!-- Import External JS -->
-<script src="js/auth.js"></script>
+<script src="js/auth.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

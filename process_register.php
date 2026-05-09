@@ -8,14 +8,16 @@ require_once 'db_connection.php';
 // Check if the form was actually submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // 1. Grab the base user data (UPDATED)
+    // Grab the base user data from POST
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $dob = $_POST['date_of_birth'];
-    $university_id = $_POST['university_id'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $user_type = $_POST['user_type'];
+
+    // Grab the sensitive data safely stored in the SESSION from Step 1
+    $university_id = $_SESSION['reg_uid'];
+    $user_type = $_SESSION['reg_type'];
+    $password_hash = $_SESSION['reg_pass']; // Already hashed in Step 1!
 
     // SECURITY: Hash the password
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -42,12 +44,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // 4. Insert into the specific ROLE table based on what they chose
         if ($user_type === 'Patient') {
+
+            // Combine the Name and Phone together to fit into your existing DB column!
+            $emergency_name = $_POST['emergency_name'] ?? 'Unknown';
+            $emergency_phone = $_POST['emergency_phone'] ?? 'No Number';
+            $combined_contact = $emergency_name . ' - ' . $emergency_phone;
+
             $sql_role = "INSERT INTO patients (user_id, emergency_contact, medical_history_summary) 
                          VALUES (:uid, :contact, :history)";
             $stmt = $pdo->prepare($sql_role);
             $stmt->execute([
                 ':uid' => $new_user_id,
-                ':contact' => $_POST['emergency_contact'] ?? null,
+                ':contact' => $combined_contact,
                 ':history' => $_POST['medical_history'] ?? null
             ]);
         }
@@ -77,7 +85,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdo->commit();
 
         // Success! Send them back to the login screen
-        echo "<h3>Registration Successful!</h3>";
+        // Clear the registration sessions
+        unset($_SESSION['reg_uid'], $_SESSION['reg_type'], $_SESSION['reg_pass']);
+
+        // Success! Send them back to the login screen with a toast
+        $_SESSION['success'] = "Registration Complete! You may now sign in.";
+        header("Location: index.php");
+        exit();
+
         echo "<p>Account created in Aiven database. <a href='index.php'>Click here to login</a></p>";
 
     } catch (PDOException $e) {

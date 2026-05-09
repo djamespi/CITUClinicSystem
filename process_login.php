@@ -23,7 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // 3. Check if account is suspended
             if ($user['account_status'] === 'Suspended') {
-                die("Access Denied: This account has been suspended.");
+                $_SESSION['error'] = "Access Denied: This account has been suspended.";
+                header("Location: index.php");
+                exit();
             }
 
             // 4. Verify the password mathematically
@@ -40,18 +42,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: admin_dashboard.php");
                     exit();
                 } else {
-                    // We will build patient_dashboard.php later!
-                    die("Welcome Patient/Provider! Your dashboard is under construction.");
+                    // We will build patient/provider dashboards later!
+                    $_SESSION['error'] = "Welcome Patient/Provider! Your dashboard is currently under construction.";
+                    header("Location: index.php");
+                    exit();
                 }
             } else {
-                echo "Error: Incorrect password.";
+                // WRONG PASSWORD
+                $_SESSION['error'] = "Error: Incorrect password. Please try again.";
+                header("Location: index.php");
+                exit();
             }
         } else {
-            echo "Error: No account found with that University ID.";
+            // NO ACCOUNT FOUND
+            $_SESSION['error'] = "Error: No account found with that University ID.";
+            header("Location: index.php");
+            exit();
         }
 
     } catch (PDOException $e) {
-        die("Login System Error: " . $e->getMessage());
+        $_SESSION['error'] = "Login System Error: " . $e->getMessage();
+        header("Location: index.php");
+        exit();
     }
 } else {
     header("Location: index.php");

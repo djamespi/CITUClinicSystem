@@ -2,16 +2,17 @@
 
 /* --- GLOBAL COLOR PALETTE --- */
 :root {
-    --citu-blue: #0A192F;
-    --citu-blue-light: #1A365D;
+    --citu-blue: #00224B;      /* Your exact requested Navy Blue! */
+    --citu-blue-light: #003B80; /* A slightly lighter version for button hover effects */
     --citu-gold: #E5C158;
     --citu-gold-hover: #D4AF37;
-    --bg-light: #F8FAFC;       /* Softer, cleaner background */
+    --bg-light: #F8FAFC;
     --white: #FFFFFF;
     --text-dark: #1E293B;
     --text-muted: #64748B;
     --border-color: #E2E8F0;
-    --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    /* Updated shadow with the exact RGB of #00224B */
+    --card-shadow: 0 10px 35px rgba(0, 34, 75, 0.15);
 }
 
 /* --- BASE STYLES --- */
@@ -53,12 +54,23 @@ h1, h2, h3, h4 {
 }
 
 .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Puts a nice space between the logos and the text */
     font-family: 'Poppins', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--citu-gold);
+    color: var(--white);
     letter-spacing: 1px;
 }
+
+/* Styles specifically for the small logos in the navbar */
+.nav-logo {
+    height: 45px; /* Fits beautifully inside the 80px tall navbar */
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); /* Tiny shadow to make them pop against the dark blue */
+}
+
 
 .nav-links {
     display: flex;
@@ -256,8 +268,23 @@ tr:hover td {
 .input-group input:focus, .input-group select:focus, .input-group textarea:focus { outline: none; border-color: var(--citu-gold); background-color: var(--white); box-shadow: 0 0 0 4px rgba(229, 193, 88, 0.15); }
 
 /* --- LOGIN PAGE STYLES --- */
-.auth-container { display: flex; width: 100%; max-width: 1100px; margin: auto; background: var(--white); border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); overflow: hidden; }
-.brand-section { flex: 1; background-color: var(--citu-blue); color: var(--white); padding: 60px; display: flex; flex-direction: column; justify-content: center; text-align: left; }
+.auth-container { display: flex; min-height: 755px; width: 100%; max-width: 1100px; margin: auto; background: var(--white); border-radius: 20px; box-shadow: 0 25px 50px rgba(0, 34, 75, 0.2); overflow: hidden; }
+
+.brand-section {
+    flex: 1;
+    /* The Magic Overlay: 85% solid CIT-U Blue on top of the Clinic Room image */
+    background: linear-gradient(rgba(0, 34, 75, 0.85), rgba(0, 34, 75, 0.90)), url('../images/clinic_room.png');
+    background-size: cover; /* Makes the image cover the whole section perfectly */
+    background-position: 15% center; /* Keeps the best part of the image in the middle */
+
+    color: var(--white);
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
 .brand-section h1 { color: var(--citu-gold); font-size: 3rem; margin-bottom: 15px; }
 .brand-section p { font-size: 1.1rem; opacity: 0.8; line-height: 1.6; }
 .form-section { flex: 1.2; padding: 60px; background-color: var(--white); }
@@ -266,7 +293,7 @@ tr:hover td {
 .toggle-btn.active { color: var(--citu-blue); font-weight: 600; border-bottom: 3px solid var(--citu-gold); margin-bottom: -2px; }
 .form-wrapper { display: none; }
 .form-wrapper.active { display: block; animation: fadeIn 0.4s ease; }
-.submit-btn { width: 100%; background-color: var(--citu-blue); color: var(--citu-gold); padding: 16px; border: none; border-radius: 10px; font-size: 1.05rem; font-weight: 600; cursor: pointer; margin-top: 15px; transition: all 0.3s; }
+.submit-btn { width: 100%; background-color: var(--citu-blue); color: var(--citu-gold); padding: 16px 20px; border: none; border-radius: 10px; font-size: 1.05rem; font-weight: 600; cursor: pointer; margin-top: 15px; transition: all 0.3s; }
 .submit-btn:hover { background-color: var(--citu-blue-light); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(10, 25, 47, 0.2); }
 
 .role-fields { display: none; background-color: var(--bg-light); padding: 25px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); border-left: 4px solid var(--citu-gold); }
@@ -281,6 +308,27 @@ tr:hover td {
 .col-description { max-width: 320px; word-wrap: break-word; white-space: normal; line-height: 1.6; }
 .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 @media (max-width: 768px) { .input-row { grid-template-columns: 1fr; } .auth-container { flex-direction: column; } .brand-section { padding: 40px; text-align: center; } }
+
+/* --- BRAND LOGOS --- */
+.logo-wrapper {
+    display: flex;
+    gap: 25px; /* Space between the two logos */
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.brand-logo {
+    height: 130px; /* Increased size! */
+    width: auto;
+    max-width: 100%;
+    /* Adding a subtle drop shadow makes SVGs pop on dark backgrounds! */
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+}
+
+.clinic-logo path{
+    fill: var(--citu-blue-light)
+}
+
 /* --- READ-ONLY INFO PANELS (edit_medical_record.php) --- */
 .info-panel {
     display: grid;
@@ -490,4 +538,65 @@ h1.admin-name {
     background-color: var(--citu-gold-hover);
     color: var(--text-dark); /* Turns text white on hover for a nice glow-up effect */
     box-shadow: 0 4px 12px rgba(10, 25, 47, 0.2);
+}
+
+/* =========================================
+   POP-UP TOAST NOTIFICATIONS
+   ========================================= */
+.toast-box {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background-color: var(--white);
+    box-shadow: 0 15px 35px rgba(0, 34, 75, 0.2); /* Uses your Navy Blue for the shadow */
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    gap: 15px;
+    z-index: 9999; /* Guarantees it floats above EVERYTHING */
+    animation: slideInRight 0.4s ease-out forwards;
+    min-width: 300px;
+    max-width: 450px;
+}
+
+/* Red for errors, Green for success */
+
+.toast-error { border-left: 6px solid var(--citu-gold); }
+.toast-success { border-left: 6px solid var(--citu-blue); }
+
+
+.toast-message {
+    flex: 1;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0;
+    line-height: 1;
+}
+
+.toast-close:hover {
+    color: var(--citu-gold); /* Turns gold when you hover over the X */
+}
+
+/* Slide in from the right edge of the screen */
+@keyframes slideInRight {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Slide out when closing */
+@keyframes fadeOutRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(120%); opacity: 0; }
 }

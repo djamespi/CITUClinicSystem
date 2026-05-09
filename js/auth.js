@@ -26,3 +26,23 @@ function showRoleFields() {
     if (role === 'Admin') document.getElementById('adminFields').classList.add('active');
     if (role === 'Provider') document.getElementById('providerFields').classList.add('active');
 }
+// --- POP-UP TOAST LOGIC ---
+
+// Function to close the toast when 'X' is clicked
+function closeToast() {
+    const toast = document.getElementById('toastBox');
+    if (toast) {
+        // Play the slide-out animation
+        toast.style.animation = 'fadeOutRight 0.4s ease-out forwards';
+        // Remove it from the page after animation finishes
+        setTimeout(() => { toast.remove(); }, 400);
+    }
+}
+
+// Automatically close the pop-up after 5 seconds
+document.addEventListener('DOMContentLoaded', () => {
+    const toast = document.getElementById('toastBox');
+    if (toast) {
+        setTimeout(closeToast, 5000); // 5000 milliseconds = 5 seconds
+    }
+});
