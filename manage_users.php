@@ -74,10 +74,15 @@ try {
     <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>"> <!-- Reusing your existing CSS -->
 
 </head>
-<body">
+<body>
+
+<?php include 'sidebar.php'; ?>
 
 <div class="management-container">
-    <a href="admin_dashboard.php" class="nav-link">← Back to Dashboard</a>
+    <div class="header">
+        <h1 class="admin-name"><?php echo $admin_display_name; ?></h1>
+        <div class="user-profile">Admin ID: <?php echo htmlspecialchars($_SESSION['university_id']); ?></div>
+    </div>
 
     <div class="card">
         <h2>User Management Console</h2>

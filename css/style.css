@@ -1,16 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap');
 
 /* --- GLOBAL COLOR PALETTE --- */
 :root {
-    --citu-blue: #0A192F;      /* Deep University Blue */
+    --citu-blue: #0A192F;
     --citu-blue-light: #1A365D;
-    --citu-gold: #E5C158;      /* Lighter, Elegant Gold */
+    --citu-gold: #E5C158;
     --citu-gold-hover: #D4AF37;
-    --bg-light: #F4F7F9;       /* Soft gray-white for the background */
+    --bg-light: #F8FAFC;       /* Softer, cleaner background */
     --white: #FFFFFF;
     --text-dark: #1E293B;
     --text-muted: #64748B;
     --border-color: #E2E8F0;
+    --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
 }
 
 /* --- BASE STYLES --- */
@@ -18,449 +19,475 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased; /* Makes fonts look sharper */
 }
 
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-light);
     color: var(--text-dark);
-    display: flex;
+    /* WE REMOVED "display: flex" SO IT HAS TO STACK TOP-TO-BOTTOM! */
+    display: block;
     min-height: 100vh;
 }
 
 h1, h2, h3, h4 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: var(--citu-blue);
-    letter-spacing: -0.5px;
+    font-weight: 600;
 }
 
 /* --- LAYOUT CONTAINERS --- */
-/* For the Admin Dashboard */
-.sidebar {
-    width: 260px;
+/* --- TOP NAVBAR --- */
+.top-navbar {
     background-color: var(--citu-blue);
-    color: var(--white);
     display: flex;
-    flex-direction: column;
-    padding-top: 30px;
-    box-shadow: 4px 0 15px rgba(0,0,0,0.05);
-    z-index: 10;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px; /* Slight padding adjustment */
+    height: 80px;
+    box-shadow: 0 4px 20px rgba(10, 25, 47, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.sidebar h2 {
-    text-align: center;
-    color: var(--citu-gold);
-    margin-bottom: 40px;
+.nav-brand {
+    font-family: 'Poppins', sans-serif;
     font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--citu-gold);
     letter-spacing: 1px;
 }
 
-.sidebar a {
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.8);
-    padding: 16px 30px;
-    font-size: 1.05rem;
+    padding: 10px 18px;
+    font-size: 0.95rem;
     font-weight: 500;
-    border-left: 4px solid transparent;
-    transition: all 0.2s ease;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
-.sidebar a:hover, .sidebar a.active {
-    background-color: var(--citu-blue-light);
-    border-left: 4px solid var(--citu-gold);
-    color: var(--citu-gold);
+.nav-links a:hover {
+    color: var(--white);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.main-content {
+.nav-links a.active {
+    background-color: var(--citu-gold);
+    color: var(--citu-blue);
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(229, 193, 88, 0.3);
+}
+
+/* Adjust Main Content to center under the top bar */
+.main-content, .management-container {
     flex: 1;
-    padding: 40px 50px;
-    overflow-y: auto;
-}
-
-/* For the Management Pages (Tickets, Users, etc.) */
-.management-container {
-    padding: 40px 50px;
+    padding: 50px 60px;
     width: 100%;
-    max-width: 1600px; /* Expanded heavily to stop table clustering */
+    max-width: 1500px; /* Gives the tables plenty of room */
     margin: 0 auto;
 }
 
-/* --- THE CARD (Holds the tables) --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 2rem;
+}
+
+.user-profile {
+    background: var(--white);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--citu-blue);
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+}
+
+/* --- THE CARDS --- */
 .card {
     background: var(--white);
-    border-radius: 12px;
-    padding: 35px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-    border: 1px solid rgba(0,0,0,0.02);
-    overflow-x: auto; /* Allows tables to stretch gracefully */
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid #F1F5F9;
+    overflow-x: auto;
+    margin-bottom: 30px;
 }
 
 .card h2, .card h3 {
-    border-bottom: 3px solid var(--citu-gold);
-    display: inline-block;
-    padding-bottom: 8px;
-    margin-bottom: 25px;
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    color: var(--citu-blue);
+    font-weight: 600;
 }
 
-/* --- ELEGANT TABLES --- */
+.card h2::after, .card h3::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+    margin-left: 20px;
+}
+/* --- ELEGANT TABLES (Blue & Gold Grid) --- */
 table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    min-width: 800px; /* Forces table to stay wide */
+    min-width: 800px;
+    /* Adds an outer gold border around the whole table */
+    border: 1px solid var(--citu-gold);
+    border-radius: 12px;
+    overflow: hidden; /* Keeps the blue header inside the rounded corners */
 }
 
 th {
-    background-color: var(--citu-blue);
-    color: var(--white);
-    font-family: 'Montserrat', sans-serif;
+    background-color: var(--citu-blue) !important;
+    color: var(--white) !important;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     letter-spacing: 1px;
     padding: 18px 20px;
     text-align: left;
+    /* Solid gold line separating header from data */
+    border-bottom: 2px solid var(--citu-gold) !important;
+    /* Gold vertical grid lines */
+    border-right: 1px solid var(--citu-gold);
 }
-
-th:first-child { border-top-left-radius: 8px; }
-th:last-child { border-top-right-radius: 8px; }
 
 td {
-    padding: 18px 20px;
-    border-bottom: 1px solid var(--border-color);
-    vertical-align: top;
+    padding: 20px;
+    vertical-align: middle;
     color: var(--text-dark);
-    line-height: 1.5;
+    font-size: 0.95rem;
+    background-color: var(--white);
+    /* Soft gold grid lines for the data cells */
+    border-bottom: 1px solid rgba(229, 193, 88, 0.5);
+    border-right: 1px solid rgba(229, 193, 88, 0.5);
 }
 
+/* Remove the right-side border on the last column so it doesn't double-up with the table's outer border */
+th:last-child, td:last-child {
+    border-right: none;
+}
+
+/* Remove the bottom border on the last row so it doesn't double-up */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Very subtle gold tint when you hover over a row */
 tr:hover td {
-    background-color: #F8FAFC;
+    background-color: rgba(229, 193, 88, 0.05);
 }
 
 /* --- BADGES & STATUSES --- */
 .status-badge, .status {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 9999px; /* Perfect pill shape */
+    font-size: 0.8rem;
     font-weight: 600;
     display: inline-block;
+    letter-spacing: 0.3px;
 }
 
-.status-active, .status.active { background-color: #E6F4EA; color: #137333; }
-.status-suspended, .status.suspended, .status-cancelled { background-color: #FCE8E6; color: #C5221F; }
-.status-pending, .status.pending, .status-open { background-color: #FEF7E0; color: #B06000; }
-.status-resolved { background-color: #E8F0FE; color: #1967D2; }
+.status-active, .status.active { background-color: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
+.status-suspended, .status.suspended, .status-cancelled { background-color: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
+.status-pending, .status.pending, .status-open { background-color: #FFFBEB; color: #D97706; border: 1px solid #FDE68A; }
+.status-resolved { background-color: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
+.role-badge { background-color: #F1F5F9; color: var(--citu-blue); padding: 6px 16px; border-radius: 9999px; font-size: 0.8rem; font-weight: 500; }
 
 /* --- BUTTONS --- */
-.btn, .btn-resolve, .btn-suspend, .btn-activate, .btn-cancel, .btn-danger {
+.btn, .btn-resolve, .btn-suspend, .btn-activate, .btn-cancel, .btn-danger, .btn-save {
     font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    padding: 8px 16px;
+    font-weight: 500;
+    padding: 8px 18px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     transition: all 0.2s ease;
     display: inline-block;
 }
 
-.btn-resolve { background-color: #137333; color: white; }
-.btn-resolve:hover { background-color: #0D5023; }
-
-.btn-suspend, .btn-cancel, .btn-danger { background-color: #C5221F; color: white; }
-.btn-suspend:hover, .btn-cancel:hover, .btn-danger:hover { background-color: #8C1A15; }
-
-.btn-activate { background-color: var(--citu-blue); color: var(--citu-gold); }
-.btn-activate:hover { background-color: var(--citu-blue-light); }
-
-/* --- ALERTS & NAVIGATION --- */
-.alert-success {
-    background-color: #E6F4EA;
-    color: #137333;
-    padding: 16px 20px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-    font-weight: 600;
-    border-left: 4px solid #137333;
+.btn:hover, .btn-resolve:hover, .btn-suspend:hover, .btn-activate:hover, .btn-cancel:hover, .btn-danger:hover {
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.nav-link {
-    display: inline-block;
-    margin-bottom: 25px;
-    color: var(--citu-blue);
-    text-decoration: none;
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif;
-    transition: color 0.2s ease;
+.btn-resolve { background-color: #10B981; color: white; }
+.btn-suspend, .btn-cancel, .btn-danger { background-color: #EF4444; color: white; }
+.btn-activate, .btn-save { background-color: var(--citu-blue); color: var(--citu-gold); }
+.btn-gold { background-color: var(--citu-gold); color: var(--citu-blue); font-weight: 600; }
+.btn-export { background-color: var(--bg-light); color: var(--citu-blue); border: 1px solid var(--border-color); }
+.btn-export:hover { background-color: var(--citu-blue); color: var(--citu-gold); }
+.btn-disabled { background-color: #E2E8F0; color: #94A3B8; cursor: not-allowed; }
+
+/* --- ALERTS & NOTICES --- */
+.alert-success { background-color: #ECFDF5; color: #059669; padding: 16px 20px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #A7F3D0; }
+.alert-error { background-color: #FEF2F2; color: #DC2626; padding: 16px 20px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #FECACA; }
+
+.nav-link { display: inline-block; margin-bottom: 30px; color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s ease; }
+.nav-link:hover { color: var(--citu-blue); }
+
+/* --- FORMS & INPUTS --- */
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9rem; color: var(--text-muted); }
+.input-group input, .input-group select, .input-group textarea { width: 100%; padding: 14px 16px; border: 1px solid var(--border-color); border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem; background-color: #F8FAFC; transition: all 0.2s ease; }
+.input-group input:focus, .input-group select:focus, .input-group textarea:focus { outline: none; border-color: var(--citu-gold); background-color: var(--white); box-shadow: 0 0 0 4px rgba(229, 193, 88, 0.15); }
+
+/* --- LOGIN PAGE STYLES --- */
+.auth-container { display: flex; width: 100%; max-width: 1100px; margin: auto; background: var(--white); border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); overflow: hidden; }
+.brand-section { flex: 1; background-color: var(--citu-blue); color: var(--white); padding: 60px; display: flex; flex-direction: column; justify-content: center; text-align: left; }
+.brand-section h1 { color: var(--citu-gold); font-size: 3rem; margin-bottom: 15px; }
+.brand-section p { font-size: 1.1rem; opacity: 0.8; line-height: 1.6; }
+.form-section { flex: 1.2; padding: 60px; background-color: var(--white); }
+.form-toggle { display: flex; margin-bottom: 40px; border-bottom: 2px solid var(--bg-light); }
+.toggle-btn { flex: 1; background: none; border: none; padding: 15px; font-size: 1.1rem; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { color: var(--citu-blue); font-weight: 600; border-bottom: 3px solid var(--citu-gold); margin-bottom: -2px; }
+.form-wrapper { display: none; }
+.form-wrapper.active { display: block; animation: fadeIn 0.4s ease; }
+.submit-btn { width: 100%; background-color: var(--citu-blue); color: var(--citu-gold); padding: 16px; border: none; border-radius: 10px; font-size: 1.05rem; font-weight: 600; cursor: pointer; margin-top: 15px; transition: all 0.3s; }
+.submit-btn:hover { background-color: var(--citu-blue-light); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(10, 25, 47, 0.2); }
+
+.role-fields { display: none; background-color: var(--bg-light); padding: 25px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); border-left: 4px solid var(--citu-gold); }
+.role-fields.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- UTILITIES --- */
+.inline-form { margin: 0; display: inline-block; }
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 1rem; }
+.subtext { font-size: 0.85rem; color: var(--text-muted); display: block; margin-top: 6px; }
+.col-description { max-width: 320px; word-wrap: break-word; white-space: normal; line-height: 1.6; }
+.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 768px) { .input-row { grid-template-columns: 1fr; } .auth-container { flex-direction: column; } .brand-section { padding: 40px; text-align: center; } }
+/* --- READ-ONLY INFO PANELS (edit_medical_record.php) --- */
+.info-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    background-color: var(--bg-light);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
 }
 
-.nav-link:hover {
-    color: var(--citu-gold);
+.info-block {
+    display: flex;
+    flex-direction: column;
 }
 
-/* --- EMPTY TABLE STATES --- */
-.empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-muted);
-    font-style: italic;
-    font-weight: 500;
-}
-
-.page-description {
-    margin-bottom: 25px;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-.btn-export {
-    background-color: var(--citu-blue);
-    color: var(--citu-gold);
-    margin-left: 5px;
+.info-label {
     font-size: 0.85rem;
-    text-decoration: none;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.info-value {
+    font-size: 1.05rem;
+    color: var(--citu-blue);
+    font-weight: 600;
+}
+
+/* --- TICKET DESCRIPTIONS (manage_tickets.php) --- */
+.desc-box {
+    background-color: #F8FAFC;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    border-left: 3px solid var(--border-color);
+}
+
+/* --- AUDIT LOG UTILITIES (view_audit_logs.php) --- */
+.table-badge {
+    background-color: #E2E8F0;
+    color: #475569;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-family: monospace; /* Gives it a tech/database look */
+}
+
+.time-text {
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+/* =========================================
+   TABLE DATA TYPOGRAPHY & POLISH
+   ========================================= */
+
+/* 1. Primary Text (Names, Important Data) */
+td strong {
+    color: var(--citu-blue);
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.2px;
+}
+
+/* 2. Secondary Text (Dates, IDs, Subtext) */
+.subtext, .text-muted {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: block;
+    font-weight: 400;
+}
+
+/* 3. Action Column Formatting (Keeps buttons aligned perfectly) */
+td form.inline-form {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Adds perfect spacing between multiple buttons */
+}
+
+td {
+    vertical-align: middle; /* Centers data perfectly with the badges */
+}
+
+/* 4. Fix the Disabled Browser Button (The "It's You!" Button) */
+button:disabled, .btn-disabled {
+    background-color: #F8FAFC !important;
+    color: #94A3B8 !important;
+    border: 1px solid #E2E8F0 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* 5. Elevate the Export PDF Button */
+.btn-export {
+    background-color: transparent;
+    color: var(--citu-blue);
+    border: 2px solid var(--citu-gold);
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    transition: all 0.2s;
 }
 
 .btn-export:hover {
-    background-color: var(--citu-blue-light);
-    color: var(--white);
-}
-
-/* --- LAYOUT UTILITIES --- */
-.inline-form {
-    margin: 0;
-    display: inline-block;
-}
-
-/* --- TABLE COLUMN UTILITIES --- */
-.col-description {
-    max-width: 300px;
-    /* Adding these two rules ensures long text wraps cleanly to the next line! */
-    word-wrap: break-word;
-    white-space: normal;
-}
-
-.btn-gold {
     background-color: var(--citu-gold);
     color: var(--citu-blue);
+    box-shadow: 0 4px 10px rgba(229, 193, 88, 0.3);
 }
 
-.btn-gold:hover {
-    background-color: var(--citu-gold-hover);
-    /* Keeps the text dark blue on hover for readability */
-    color: var(--citu-blue);
-}
-
-/* --- TEXT UTILITIES --- */
-.subtext {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    /* Adding display: block; ensures the time drops to the next line beautifully */
+/* 6. Refine the Support Ticket Action Column */
+.col-description strong {
     display: block;
-    margin-top: 4px;
-}
-
-/* --- LOGIN / LANDING PAGE --- */
-.login-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100%;
-    background-color: var(--bg-light);
-}
-
-.login-card {
-    background: var(--white);
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    width: 100%;
-    max-width: 450px;
-    /* Centers the logo and text inside the card */
-    text-align: center;
-}
-
-.login-card h2 {
-    margin-bottom: 25px;
+    margin-bottom: 6px;
     color: var(--citu-blue);
 }
 
-/* --- FORM LAYOUT UTILITIES --- */
-.input-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Creates two equal columns */
-    gap: 15px;
-}
-
-/* This makes sure the fields stack neatly on top of each other on mobile phones! */
-@media (max-width: 600px) {
-    .input-row {
-        grid-template-columns: 1fr;
-    }
-}
-
-.btn-disabled {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    background-color: var(--border-color); /* Greyed out */
-    color: var(--text-muted); /* Faded text */
-    cursor: not-allowed; /* Shows a red "stop" circle when hovering! */
-}
-
-/* --- LOGIN & REGISTRATION PAGE STYLES --- */
-.auth-container {
-    display: flex;
-    width: 100%;
-    max-width: 1000px;
-    margin: auto;
-    background: var(--white);
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
-
-.brand-section {
-    flex: 1;
-    background-color: var(--citu-blue);
-    color: var(--white);
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-}
-
-.brand-section h1 {
+/* --- GOLD LOGOUT BUTTON --- */
+.nav-logout .logout-btn {
+    text-decoration: none;
     color: var(--citu-gold);
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.form-section {
-    flex: 1;
-    padding: 50px;
-    background-color: var(--white);
-}
-
-.form-toggle {
-    display: flex;
-    margin-bottom: 30px;
-    border-bottom: 2px solid var(--border-color);
-}
-
-.toggle-btn {
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 10px;
-    font-size: 1.1rem;
     font-weight: 600;
-    color: var(--text-muted);
-    cursor: pointer;
+    padding: 8px 18px;
+    border: 2px solid var(--citu-gold);
+    border-radius: 8px;
     transition: all 0.3s ease;
 }
 
-.toggle-btn.active {
+.nav-logout .logout-btn:hover {
+    background-color: var(--citu-gold);
     color: var(--citu-blue);
-    border-bottom: 3px solid var(--citu-gold);
-    margin-bottom: -2px; /* overlaps the border beautifully */
+    box-shadow: 0 4px 12px rgba(229, 193, 88, 0.3);
 }
 
-/* HIDDEN BY DEFAULT, SHOWN WHEN ACTIVE */
-.form-wrapper {
-    display: none;
-}
-.form-wrapper.active {
-    display: block;
-}
-
-.role-fields {
-    display: none;
-    background-color: var(--bg-light);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    border-left: 4px solid var(--citu-gold);
-}
-.role-fields.active {
-    display: block;
+/* --- ADMIN NAME PAGE HEADER --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
-.input-group {
-    margin-bottom: 15px;
+h1.admin-name {
+    color: var(--citu-gold);
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Gives the gold a slight pop */
+}
+/* =========================================
+   PROVIDER OVERRIDE TAB
+   ========================================= */
+.override-desc {
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-size: 1rem;
+    margin-bottom: 20px;
 }
 
-.input-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    color: var(--text-dark);
-}
-
-.input-group input, .input-group select, .input-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-}
-
-.input-group input:focus, .input-group select:focus, .input-group textarea:focus {
-    outline: none;
-    border-color: var(--citu-gold);
-    box-shadow: 0 0 0 3px rgba(229, 193, 88, 0.2);
-}
-
-.submit-btn {
-    width: 100%;
-    background-color: var(--citu-blue);
-    color: var(--white);
-    padding: 14px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.3s;
-}
-
-.submit-btn:hover {
-    background-color: var(--citu-blue-light);
-}
-
-/* --- WARNING BOXES & ERRORS (For Provider Overrides) --- */
-.warning-box {
-    background-color: #FFF3CD; /* Light yellow/warning color */
-    color: #856404;
-    padding: 16px 22px;
-    border-radius: 8px;
-    margin-bottom: 25px;
+.critical-text {
+    color: #DC2626; /* Sleek danger red */
+    background-color: #FEF2F2; /* Soft red background to make it pop */
     font-size: 0.95rem;
     line-height: 1.6;
-    border-left: 5px solid #FFC107;
-}
-
-.warning-box strong {
-    display: block;
-    font-size: 1.1rem;
-    color: #856404;
-    margin-bottom: 6px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.alert-error {
-    background-color: #FCE8E6;
-    color: #C5221F;
+    border-left: 4px solid #DC2626;
     padding: 16px 20px;
-    border-radius: 8px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    border-radius: 0 8px 8px 0;
+}
+
+.critical-text strong {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 5px;
+    font-size: 1.05rem;
+}
+.override-form .input-group label {
+    color: var(--citu-blue);
     font-weight: 600;
-    border-left: 4px solid #C5221F;
+}
+.btn-override {
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 10px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+    /* New Blue and Gold Colors */
+    background-color: var(--citu-blue);
+    color: var(--citu-gold);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-override:hover {
+    background-color: var(--citu-gold-hover);
+    color: var(--text-dark); /* Turns text white on hover for a nice glow-up effect */
+    box-shadow: 0 4px 12px rgba(10, 25, 47, 0.2);
 }

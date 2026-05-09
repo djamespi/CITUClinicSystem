@@ -37,24 +37,13 @@ try {
 <body>
 
 <!-- Sidebar -->
-<div class="sidebar">
-    <h2>CIT-U CLINIC</h2>
-    <a href="#" class="active">Dashboard</a>
-    <a href="manage_appointments.php">Appointments</a>
-    <a href="manage_users.php">Patients Directory</a>
-    <a href="manage_provider_schedules.php">Provider Overrides</a>
-    <a href="manage_tickets.php">Support Tickets</a>
-    <a href="view_audit_logs.php">System Audit Logs</a>
-    <a href="logout.php" class="logout-btn">Log Out</a>
-</div>
+<?php include 'sidebar.php'; ?>
 
 <!-- Main Content -->
 <div class="main-content">
     <div class="header">
-        <h1>Administrator Dashboard</h1>
-        <div class="user-profile">
-            Admin ID: <?php echo htmlspecialchars($current_university_id); ?>
-        </div>
+        <h1 class="admin-name"><?php echo $admin_display_name; ?></h1>
+        <div class="user-profile">Admin ID: <?php echo htmlspecialchars($_SESSION['university_id']); ?></div>
     </div>
 
     <div class="card">

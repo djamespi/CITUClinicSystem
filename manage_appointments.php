@@ -84,9 +84,13 @@ try {
 </head>
 <body>
 
-<div class="management-container">
-    <a href="admin_dashboard.php" class="nav-link">← Back to Dashboard</a>
+<?php include 'sidebar.php'; ?>
 
+<div class="management-container">
+    <div class="header">
+        <h1 class="admin-name"><?php echo $admin_display_name; ?></h1>
+        <div class="user-profile">Admin ID: <?php echo htmlspecialchars($_SESSION['university_id']); ?></div>
+    </div>
     <div class="card">
         <h2>Clinic Appointments Master Schedule</h2>
 

@@ -98,12 +98,17 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Edit Medical Record | CIT-U Clinic</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
+<?php include 'sidebar.php'; ?>
+
 <div class="management-container">
-    <a href="admin_dashboard.php" class="nav-link">← Back to Dashboard</a>
+    <div class="header">
+        <h1 class="admin-name"><?php echo $admin_display_name; ?></h1>
+        <div class="user-profile">Admin ID: <?php echo htmlspecialchars($_SESSION['university_id']); ?></div>
+    </div>
 
     <div class="card">
         <h2>Amend Medical Record #<?php echo htmlspecialchars($record['record_id']); ?></h2>

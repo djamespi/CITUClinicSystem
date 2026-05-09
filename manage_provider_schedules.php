@@ -82,7 +82,6 @@ try {
     $error_message = "System Error: " . $e->getMessage();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,25 +91,39 @@ try {
 </head>
 <body>
 
+<?php include 'sidebar.php'; ?>
+
 <div class="management-container">
-    <a href="admin_dashboard.php" class="nav-link">← Back to Dashboard</a>
 
+    <!-- The Universal Admin Header -->
+    <div class="header">
+        <h1 class="admin-name"><?php echo $admin_display_name; ?></h1>
+        <div class="user-profile">Admin ID: <?php echo htmlspecialchars($_SESSION['university_id']); ?></div>
+    </div>
+
+    <?php if ($success_message): ?>
+        <div class="alert-success"><?php echo $success_message; ?></div>
+    <?php endif; ?>
+    <?php if ($error_message): ?>
+        <div class="alert-error"><?php echo $error_message; ?></div>
+    <?php endif; ?>
+
+    <!-- The New Split Layout -->
+    <!-- Standard Card Layout (Aligns perfectly with other tabs) -->
     <div class="card">
-        <h2>Emergency Provider Override</h2>
+        <h2>Provider Schedule Override</h2>
 
-        <div class="warning-box">
-            <strong>⚠️ CRITICAL ACTION WARNING</strong>
-            This tool will immediately cancel ALL active appointments for the selected provider on the chosen date. It will also lock all of their time slots to prevent any new bookings. This action cannot be easily undone.
+        <p class="override-desc">
+            This tool is designed for emergency management of healthcare provider schedules. Use this control panel only when a provider is unexpectedly absent or unavailable.
+        </p>
+
+        <div class="critical-text">
+            <strong>CRITICAL ACTION:</strong>
+            Executing an override will instantly cancel all active appointments for the selected provider on the chosen date. It locks their time slots to prevent any new bookings. This action cannot be undone.
         </div>
 
-        <?php if ($success_message): ?>
-            <div class="alert-success"><?php echo $success_message; ?></div>
-        <?php endif; ?>
-        <?php if ($error_message): ?>
-            <div class="alert-error"><?php echo $error_message; ?></div>
-        <?php endif; ?>
-
-        <form method="POST" action="">
+        <!-- The Execution Form -->
+        <form method="POST" action="" class="override-form">
             <input type="hidden" name="action" value="bulk_override">
 
             <div class="input-group">
@@ -127,16 +140,17 @@ try {
 
             <div class="input-group">
                 <label>Date of Emergency / Absence</label>
-                <!-- Sets minimum date to today so Admins can't accidentally delete history -->
                 <input type="date" name="target_date" min="<?php echo date('Y-m-d'); ?>" required>
             </div>
 
-            <button type="submit" class="btn-danger" onclick="return confirm('FINAL WARNING: Are you absolutely sure you want to cancel all appointments and lock the schedule for this provider?');">
-                Execute Emergency Override
+            <button type="submit" class="btn-override" onclick="return confirm('FINAL WARNING: Are you absolutely sure you want to cancel all appointments and lock the schedule for this provider?');">
+                Lock Schedule & Cancel Appointments
             </button>
         </form>
     </div>
-</div>
+
+</div> <!-- End management-container -->
+
 
 </body>
 </html>
