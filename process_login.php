@@ -6,7 +6,7 @@ require_once 'db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $university_id = $_POST['university_id'];
+    $university_id = trim($_POST['university_id']); // Automatically deletes accidental spaces!
     $password_attempt = $_POST['password'];
 
     try {

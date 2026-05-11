@@ -1,33 +1,28 @@
 <?php
-// Start a session in case we need to pass error/success messages
 session_start();
-
-// Bring in the live Aiven connection ($pdo)
 require_once 'db_connection.php';
 
-// Check if the form was actually submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Grab the base user data from POST
+    // 1. Grab the base data from POST (From the setup_profile.php form)
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $dob = $_POST['date_of_birth'];
     $email = $_POST['email'];
 
-    // Grab the sensitive data safely stored in the SESSION from Step 1
+    // 2. Grab the sensitive data from SESSION (From the index.php Step 1 form)
     $university_id = $_SESSION['reg_uid'];
     $user_type = $_SESSION['reg_type'];
-    $password_hash = $_SESSION['reg_pass']; // Already hashed in Step 1!
-
-    // SECURITY: Hash the password
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    $password_hash = $_SESSION['reg_pass']; // This was securely hashed in Step 1
 
     try {
         $pdo->beginTransaction();
 
-        // 2. Insert into the main USERS table (UPDATED)
-        $sql_user = "INSERT INTO users (fname, lname, date_of_birth, university_id, email, password_hash, user_type) 
-                     VALUES (:fname, :lname, :dob, :uni_id, :email, :pass, :type)";
+        // 3. Insert into the main USERS table
+        // Notice we explicitly set account_status to 'Active' so they can log in immediately!
+        $sql_user = "INSERT INTO users (fname, lname, date_of_birth, university_id, email, password_hash, user_type, account_status) 
+                     VALUES (:fname, :lname, :dob, :uni_id, :email, :pass, :type, 'Active')";
+
         $stmt = $pdo->prepare($sql_user);
         $stmt->execute([
             ':fname' => $fname,
@@ -39,13 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':type' => $user_type
         ]);
 
-        // 3. Get the ID of the user we just created (Foreign Key)
+        // Get the ID of the user we just created
         $new_user_id = $pdo->lastInsertId();
 
-        // 4. Insert into the specific ROLE table based on what they chose
+        // 4. Insert into the specific ROLE table
         if ($user_type === 'Patient') {
-
-            // Combine the Name and Phone together to fit into your existing DB column!
             $emergency_name = $_POST['emergency_name'] ?? 'Unknown';
             $emergency_phone = $_POST['emergency_phone'] ?? 'No Number';
             $combined_contact = $emergency_name . ' - ' . $emergency_phone;
@@ -81,32 +74,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ]);
         }
 
-        // 5. If everything worked perfectly, commit the save!
+        // 5. Commit the save!
         $pdo->commit();
 
-        // Success! Send them back to the login screen
-        // Clear the registration sessions
+        // 6. Clear the temporary session data
         unset($_SESSION['reg_uid'], $_SESSION['reg_type'], $_SESSION['reg_pass']);
 
-        // Success! Send them back to the login screen with a toast
+        // 7. Redirect with Success Toast
         $_SESSION['success'] = "Registration Complete! You may now sign in.";
         header("Location: index.php");
         exit();
 
-        echo "<p>Account created in Aiven database. <a href='index.php'>Click here to login</a></p>";
-
     } catch (PDOException $e) {
-        // If anything failed, undo the whole process
         $pdo->rollBack();
 
         // Check for duplicate emails or IDs
         if ($e->getCode() == 23000) {
-            die("Error: That University ID or Email is already registered.");
+            $_SESSION['error'] = "Error: That Email or University ID is already registered.";
+        } else {
+            $_SESSION['error'] = "Registration Failed: " . $e->getMessage();
         }
-        die("Registration Failed: " . $e->getMessage());
+        header("Location: index.php");
+        exit();
     }
 } else {
-    // If they tried to visit this file directly without submitting the form
     header("Location: index.php");
     exit();
 }
