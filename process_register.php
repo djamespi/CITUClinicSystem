@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password_hash = $_SESSION['reg_pass']; // Already hashed in Step 1!
 
     // SECURITY: Hash the password
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
+    $password_hash = $_SESSION['reg_pass']; // This was securely hashed in Step 1
+    
     try {
         $pdo->beginTransaction();
 
