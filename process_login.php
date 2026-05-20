@@ -4,8 +4,8 @@ session_start();
 require_once 'db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
-    $university_id = trim($_POST['university_id']); // Automatically deletes accidental spaces!
+
+    $university_id    = $_POST['university_id'];
     $password_attempt = $_POST['password'];
 
     try {
@@ -37,9 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: student_dashboard.php");
                     exit();
                 } elseif ($_SESSION['role'] === 'Provider') {
-                    // Provider dashboard placeholder — build later
-                    $_SESSION['error'] = "Provider dashboard coming soon.";
-                    header("Location: index.php");
+                    header("Location: provider_dashboard.php");
                     exit();
                 }
 

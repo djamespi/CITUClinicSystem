@@ -15,7 +15,7 @@ try {
     $stmt = $pdo->prepare("SELECT admin_id FROM admins WHERE user_id = :uid LIMIT 1");
     $stmt->execute([':uid' => $current_user_id]);
     $admin_data = $stmt->fetch();
-    $admin_id = $admin_da   ta['admin_id'];
+    $admin_id = $admin_data['admin_id'];
 
     // --- HANDLE CRUD: UPDATE (Cancel Appt), UPDATE (Free Slot) & CREATE (Log) ---
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'cancel_appointment') {

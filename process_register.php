@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdo->beginTransaction();
 
         // 3. Insert into the main USERS table
-        // Notice we explicitly set account_status to 'Active' so they can log in immediately!
+        // Notice we explicitly set account_status to 'Active' so they can log in immediately
         $sql_user = "INSERT INTO users (fname, lname, date_of_birth, university_id, email, password_hash, user_type, account_status) 
                      VALUES (:fname, :lname, :dob, :uni_id, :email, :pass, :type, 'Active')";
 
