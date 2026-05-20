@@ -28,6 +28,25 @@ function showRoleFields() {
 }
 // --- POP-UP TOAST LOGIC ---
 
+// Function to display message boxes
+function showMessage(message, type = 'error') {
+    const messageBox = document.createElement('div');
+    messageBox.className = `toast-box toast-${type}`;
+    messageBox.innerHTML = `
+        <div class="toast-message">${message}</div>
+        <button class="toast-close" onclick="this.parentElement.remove();">&times;</button>
+    `;
+    document.body.appendChild(messageBox);
+    
+    // Auto-close after 5 seconds
+    setTimeout(() => {
+        if (messageBox.parentElement) {
+            messageBox.style.animation = 'fadeOutRight 0.4s ease-out forwards';
+            setTimeout(() => { messageBox.remove(); }, 400);
+        }
+    }, 5000);
+}
+
 // Function to close the toast when 'X' is clicked
 function closeToast() {
     const toast = document.getElementById('toastBox');

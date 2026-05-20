@@ -3,21 +3,18 @@ session_start();
 require_once 'db_connection.php';
 
 // --- SECURITY CHECK ---
-// If they are not logged in, OR if their role is not 'Admin', kick them out!
 if (!isset($_SESSION['logged_in']) || $_SESSION['role'] !== 'Admin') {
     header("Location: index.php");
     exit();
 }
 
-// Fetch the currently logged-in admin's ID
 $current_university_id = $_SESSION['university_id'];
 
 try {
-    // Let's pull the most recently registered users to display in a table
-    // Notice we are grabbing the new fname and lname columns you just added!
+    // Fetch ALL registered users - removed LIMIT 10
     $sql = "SELECT university_id, fname, lname, user_type, account_status, date_of_birth 
             FROM users 
-            ORDER BY user_id DESC LIMIT 10";
+            ORDER BY user_id DESC";
     $stmt = $pdo->query($sql);
     $recent_users = $stmt->fetchAll();
 
@@ -36,10 +33,8 @@ try {
 </head>
 <body>
 
-<!-- Sidebar -->
 <?php include 'sidebar.php'; ?>
 
-<!-- Main Content -->
 <div class="main-content">
     <div class="header">
         <h1 class="admin-name"><?php echo $admin_display_name; ?></h1>
@@ -47,16 +42,16 @@ try {
     </div>
 
     <div class="card">
-        <h3>Recently Registered Users</h3>
+        <h3>All Registered Users (<?php echo count($recent_users); ?>)</h3>
         <table>
             <thead>
-            <tr>
-                <th>University ID</th>
-                <th>Name</th>
-                <th>Date of Birth</th>
-                <th>Role</th>
-                <th>Status</th>
-            </tr>
+                <tr>
+                    <th>University ID</th>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                </tr>
             </thead>
             <tbody>
             <?php if (count($recent_users) > 0): ?>
@@ -67,9 +62,9 @@ try {
                         <td><?php echo htmlspecialchars($u['date_of_birth']); ?></td>
                         <td><span class="role-badge"><?php echo htmlspecialchars($u['user_type']); ?></span></td>
                         <td>
-                                    <span class="status <?php echo strtolower($u['account_status']); ?>">
-                                        <?php echo htmlspecialchars($u['account_status']); ?>
-                                    </span>
+                            <span class="status <?php echo strtolower($u['account_status']); ?>">
+                                <?php echo htmlspecialchars($u['account_status']); ?>
+                            </span>
                         </td>
                     </tr>
                 <?php endforeach; ?>
